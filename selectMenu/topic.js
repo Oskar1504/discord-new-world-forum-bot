@@ -14,7 +14,7 @@ module.exports = {
                 posts = posts.map( elm => {
                     let c = convertPostToMsg(elm)
                     return {
-                        content: (c.length < 3990)?c:c.slice(0,3990) + "..."
+                        content: (c.length < 1990)?c:c.slice(0,1990) + "\n..."
                     }
                 })
                 let thread = interaction.channel.threads.cache.find(x => x.name === response.data.title);
@@ -24,13 +24,11 @@ module.exports = {
                     name: response.data.title,
                     autoArchiveDuration: 60
                 });
-                interaction.deferUpdate(true)
                 for (const post of posts) {
                     await thread.send(post)
                     //small delay
                     await new Promise(resolve => setTimeout(resolve, 1500));
                 }
-
             })
             .catch(async function(error) {
                 console.log(error.toString());

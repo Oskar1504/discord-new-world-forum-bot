@@ -19,12 +19,6 @@ module.exports = {
                         value:`/t/${elm.id}.json`
                     }
                 })
-                fields = fields.map( elm => {
-                    return {
-                        name: elm.title,
-                        value:`Views:${elm.views} | Likes:${elm.like_count} | Replys: ${elm.reply_count} | [Link](${nw_host}/t/${elm.slug})`
-                    }
-                })
                 const row = new MessageActionRow()
                     .addComponents(
                         new MessageSelectMenu()
@@ -33,18 +27,14 @@ module.exports = {
                             .addOptions(selectOptions)
                             .setMaxValues(1),
                     );
-
-                await interaction.reply({
-                    embeds: [
-                        new MessageEmbed()
-                            .setTitle(`NW Forum categorie ${interaction.values[0]}`)
-                            .setURL(axios_url)
-                            .setColor("GOLD")
-                            .addFields(fields)
-                            .setTimestamp(new Date())
-                    ],
-                    components:[row]
-                })
+                let p = interaction.message.components
+                p.push(row)
+                await interaction.message.edit({components:p})
+                interaction.deferUpdate(true)
+                // await interaction.reply({
+                //     content:"Select an post",
+                //     components:[row]
+                // })
             })
             .catch(async function(error) {
                 console.log(error.toString());
