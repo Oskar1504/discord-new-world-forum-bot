@@ -1,5 +1,4 @@
-const Embed = require("./../../../helper/Embed")
-const { MessageActionRow, MessageButton } = require('discord.js');
+const { MessageActionRow, MessageButton, MessageEmbed } = require('discord.js');
 
 
 module.exports = {
@@ -21,17 +20,41 @@ module.exports = {
             );
         await interaction.reply({
             embeds: [
-                Embed.create("Emebd 1")
-                    .getEmbed(),
-
-                Embed.create("Embed 2")
-                    .getEmbed(),
-
-                Embed.create("Embed 3")
-                    .getEmbed(),
-
-                Embed.create("Embed 4")
-                    .getEmbed()
+                new MessageEmbed()
+                    .setTitle("Embed 1")
+                    .addField("Field1","value")
+                    .addField("Field2","value")
+                    .setColor("GREEN")
+                    .setFooter("Footer")
+                    .setAuthor("Author")
+                    .setURL('https://discord.js.org')
+                    .setTimestamp(new Date()),
+                new MessageEmbed()
+                    .setTitle("Embed 2")
+                    .addField("Field1","value")
+                    .setColor("GOLD")
+                    .setFooter("Footer")
+                    .setAuthor("Author")
+                    .setURL('https://discord.js.org')
+                    .setTimestamp(new Date()),
+                new MessageEmbed()
+                    .setTitle("Embed 3")
+                    .addField("Field1","value")
+                    .addField("Field2","value")
+                    .addField("Field3","value")
+                    .addField("Field2","value")
+                    .setColor("BLURPLE")
+                    .setFooter("Footer")
+                    .setAuthor("Author")
+                    .setURL('https://discord.js.org')
+                    .setTimestamp(new Date()),
+                new MessageEmbed()
+                    .setTitle("Embed 4")
+                    .setColor("RED")
+                    .setFooter("Footer")
+                    .setAuthor("Author")
+                    .setURL('https://discord.js.org')
+                    .setTimestamp(new Date()),
             ],
             components:[row]
         })

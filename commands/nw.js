@@ -15,14 +15,26 @@ module.exports = {
                 )
                 .addSubcommand(subcommand =>
                     subcommand
-                        .setName('devposts')
-                        .setDescription('Show NW forum DEV posts.')
+                        .setName('post')
+                        .setDescription('Show NW forum post.')
+                        .addStringOption(option =>
+                            option.setName('input')
+                                .setDescription('Enter a string')
+                                .addChoice("Oskar","oskar")
+                                .addChoice("Oskar2","oskar2")
+                                .addChoice("leo","dawd")
+                        )
                 )
                 .addSubcommand(subcommand =>
                     subcommand
                         .setName('top')
                         .setDescription('Show top NW forum posts.')
                 )
+                    .addSubcommand(subcommand =>
+                        subcommand
+                            .setName('categories')
+                            .setDescription('Show top NW forum categories.')
+                    )
             )
         .addSubcommandGroup(subcommandgroup =>
             subcommandgroup

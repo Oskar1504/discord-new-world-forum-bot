@@ -2,8 +2,7 @@ module.exports = {
     name: 'interactionCreate',
     async execute(interaction) {
         if(interaction.isButton()){
-            console.log(interaction.customId)
-            console.log("Button interaction")
+            console.log(interaction.message.embeds)
             switch (interaction.customId){
                 case "forward":
                     interaction.message.embeds.push(interaction.message.embeds.shift())
@@ -14,8 +13,18 @@ module.exports = {
                     interaction.message.embeds.unshift(interaction.message.embeds.pop())
                     break
             }
-            interaction.message.edit({embeds:interaction.message.embeds})
-            interaction.deferUpdate(true)
+            await interaction.message.edit({embeds:interaction.message.embeds})
+            await interaction.deferUpdate(true)
+            return
+        }
+
+        if(interaction.isSelectMenu()){
+            try{
+                require(`./../selectMenu/${interaction.customId}`).execute(interaction)
+            }catch (e) {
+                console.error(e.toString());
+                await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true })
+            }
             return
         }
 
