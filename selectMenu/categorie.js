@@ -14,7 +14,7 @@ module.exports = {
                 let fields = response.data.topic_list.topics.slice(0,24)
                 let selectOptions = fields.map( elm => {
                     return {
-                        label:elm.title,
+                        label:elm.title.slice(0,99),
                         description:`Views:${elm.views} | Likes:${elm.like_count} | Replys: ${elm.reply_count}`,
                         value:`/t/${elm.id}.json`
                     }
@@ -49,7 +49,7 @@ module.exports = {
             .catch(async function(error) {
                 console.log(error.toString());
                  await interaction.reply({
-                    content: `Error ${error.status} while requesting ${axios_url}`,
+                    content: `Error ${error.toString()}`,
                      ephemeral:true
                 })
             })

@@ -41,5 +41,5 @@ module.exports = {
 };
 
 function convertPostToMsg(elm){
-    return `>>>Author:${elm.username}\n\n ${convert(elm.cooked, {wordwrap: 130})}`
+    return `>>> Author:${elm.username}\n\n ${convert(elm.cooked, {wordwrap: 130})}`
 }
