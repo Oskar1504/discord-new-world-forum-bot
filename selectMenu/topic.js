@@ -10,11 +10,11 @@ module.exports = {
         await axios.get(axios_url)
             .then(async function (response) {
                 console.log(axios_url, response.status);
-                let posts = response.data.post_stream.posts
+                let posts = response.data.post_stream.posts.slice(0,10)
                 posts = posts.map( elm => {
                     let c = convertPostToMsg(elm)
                     return {
-                        content: (c.length < 4000)?c:"post to long"
+                        content: (c.length < 3990)?c:c.slice(0,3990) + "..."
                     }
                 })
                 let thread = interaction.channel.threads.cache.find(x => x.name === response.data.title);
@@ -24,10 +24,12 @@ module.exports = {
                     name: response.data.title,
                     autoArchiveDuration: 60
                 });
+                interaction.deferUpdate(true)
                 for (const post of posts) {
                     await thread.send(post)
+                    //small delay
+                    await new Promise(resolve => setTimeout(resolve, 1500));
                 }
-                interaction.deferUpdate(true)
 
             })
             .catch(async function(error) {
@@ -41,5 +43,5 @@ module.exports = {
 };
 
 function convertPostToMsg(elm){
-    return `>>> Author:${elm.username}\n\n ${convert(elm.cooked, {wordwrap: 130})}`
+    return `---------------------------------\n>>> Author:${elm.username}\n\n ${convert(elm.cooked, {wordwrap: 130})}`
 }
