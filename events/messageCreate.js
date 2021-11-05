@@ -1,6 +1,6 @@
 module.exports = {
     name: 'messageCreate',
     execute(message) {
-        console.log("reciont")
+        console.log("message create")
     },
 };

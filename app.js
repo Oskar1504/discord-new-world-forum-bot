@@ -19,26 +19,12 @@ const client = new Client({
 
 client.commands = new Collection();
 
-let commandFiles = []
+let commandFiles =  fs.readdirSync("./commands")
 
-// query nested commands - used before subcommands discovered
-//https://stackoverflow.com/a/36730872
-let getFiles = function(path, files){
-    fs.readdirSync(path).forEach(function(file){
-        var subpath = path + '/' + file;
-        if(fs.lstatSync(subpath).isDirectory()){
-            getFiles(subpath, files);
-        } else {
-            files.push(path + '/' + file);
-        }
-    });
-}
-
-getFiles("./commands", commandFiles)
 commandFiles = commandFiles.filter(file => file.endsWith('.js'))
 
 for (const file of commandFiles) {
-    const command = require(`${file}`);
+    const command = require(`./commands/${file}`);
     client.commands.set(command.data.name, command);
 }
 
